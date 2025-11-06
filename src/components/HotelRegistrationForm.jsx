@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const FormInput = ({ label, placeholder, type = "text", value, onChange }) => {
+const FormInput = ({ label, placeholder, type = "text", value, onChange, error }) => {
   return (
     <div className="space-y-2">
       <label className="block text-[14px] font-medium text-gray-700">
@@ -12,13 +12,16 @@ const FormInput = ({ label, placeholder, type = "text", value, onChange }) => {
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full h-[50px] px-4 text-[15px] border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+        className={`w-full h-[50px] px-4 text-[15px] border-2 ${
+          error ? 'border-red-500' : 'border-gray-300'
+        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
       />
+      {error && <p className="text-red-500 text-[13px] mt-1">{error}</p>}
     </div>
   )
 }
 
-const PasswordInput = ({ label, placeholder, value, onChange }) => {
+const PasswordInput = ({ label, placeholder, value, onChange, error }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
@@ -32,7 +35,9 @@ const PasswordInput = ({ label, placeholder, value, onChange }) => {
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full h-[50px] px-4 pr-12 text-[15px] border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+          className={`w-full h-[50px] px-4 pr-12 text-[15px] border-2 ${
+            error ? 'border-red-500' : 'border-gray-300'
+          } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
         />
         <button
           type="button"
@@ -51,11 +56,12 @@ const PasswordInput = ({ label, placeholder, value, onChange }) => {
           )}
         </button>
       </div>
+      {error && <p className="text-red-500 text-[13px] mt-1">{error}</p>}
     </div>
   )
 }
 
-const FileUploadInput = ({ label, placeholder, onChange }) => {
+const FileUploadInput = ({ label, placeholder, onChange, error }) => {
   const [fileNames, setFileNames] = useState([])
 
   const handleFileChange = (e) => {
@@ -85,7 +91,9 @@ const FileUploadInput = ({ label, placeholder, onChange }) => {
         />
         <label
           htmlFor={label.replace(/\s+/g, '-').toLowerCase()}
-          className="w-full h-[50px] px-4 text-[15px] border-2 border-gray-300 rounded-lg flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all duration-200 bg-white"
+          className={`w-full h-[50px] px-4 text-[15px] border-2 ${
+            error ? 'border-red-500' : 'border-gray-300'
+          } rounded-lg flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all duration-200 bg-white`}
         >
           <span className={fileNames.length > 0 ? "text-gray-900" : "text-gray-400"}>
             {displayText}
@@ -95,6 +103,7 @@ const FileUploadInput = ({ label, placeholder, onChange }) => {
           </svg>
         </label>
       </div>
+      {error && <p className="text-red-500 text-[13px] mt-1">{error}</p>}
     </div>
   )
 }
@@ -118,15 +127,65 @@ const HotelRegistrationForm = () => {
     facilities: ''
   })
 
+  const [errors, setErrors] = useState({})
+
   const handleInputChange = (name, value) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
     }))
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }))
+    }
+  }
+
+  const validateForm = () => {
+    const newErrors = {}
+
+    // Personal Information validation
+    if (!formData.name.trim()) newErrors.name = 'Full name is required'
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email'
+    }
+    if (!formData.phoneNo.trim()) newErrors.phoneNo = 'Phone number is required'
+    if (!formData.country.trim()) newErrors.country = 'Country is required'
+    if (!formData.nic.trim()) newErrors.nic = 'NIC is required'
+    if (!formData.username.trim()) newErrors.username = 'Username is required'
+    if (!formData.password) {
+      newErrors.password = 'Password is required'
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters'
+    }
+
+    // Hotel Information validation
+    if (!formData.hotelName.trim()) newErrors.hotelName = 'Hotel name is required'
+    if (!formData.registrationNo.trim()) newErrors.registrationNo = 'Registration number is required'
+    if (!formData.address.trim()) newErrors.address = 'Hotel address is required'
+    if (!formData.uploadImages) newErrors.uploadImages = 'Please upload hotel images'
+    if (!formData.uploadDocuments) newErrors.uploadDocuments = 'Please upload registration documents'
+    if (!formData.facilities.trim()) newErrors.facilities = 'Please describe hotel facilities'
+
+    return newErrors
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    
+    const validationErrors = validateForm()
+    
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      // Scroll to first error
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+
     console.log('Form submitted:', formData)
     navigate('/verification-success')
   }
@@ -136,10 +195,10 @@ const HotelRegistrationForm = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-6 py-10">
+    <div className="min-h-screen bg-gray-50 px-6 py-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-center mb-10">
+        <div className="flex items-center justify-center mb-6">
           <h2 className="text-[32px] font-semibold text-gray-900 text-center">
             Register Your Hotel
           </h2>
@@ -162,6 +221,7 @@ const HotelRegistrationForm = () => {
                   placeholder="Enter your full name"
                   value={formData.name}
                   onChange={(value) => handleInputChange('name', value)}
+                  error={errors.name}
                 />
 
                 <FormInput
@@ -170,6 +230,7 @@ const HotelRegistrationForm = () => {
                   type="email"
                   value={formData.email}
                   onChange={(value) => handleInputChange('email', value)}
+                  error={errors.email}
                 />
 
                 <FormInput
@@ -177,6 +238,7 @@ const HotelRegistrationForm = () => {
                   placeholder="With country code (e.g., +1234567890)"
                   value={formData.phoneNo}
                   onChange={(value) => handleInputChange('phoneNo', value)}
+                  error={errors.phoneNo}
                 />
 
                 <FormInput
@@ -184,6 +246,7 @@ const HotelRegistrationForm = () => {
                   placeholder="Select your country"
                   value={formData.country}
                   onChange={(value) => handleInputChange('country', value)}
+                  error={errors.country}
                 />
 
                 <FormInput
@@ -191,6 +254,7 @@ const HotelRegistrationForm = () => {
                   placeholder="Enter your NIC number"
                   value={formData.nic}
                   onChange={(value) => handleInputChange('nic', value)}
+                  error={errors.nic}
                 />
 
                 <FormInput
@@ -198,6 +262,7 @@ const HotelRegistrationForm = () => {
                   placeholder="Choose a username"
                   value={formData.username}
                   onChange={(value) => handleInputChange('username', value)}
+                  error={errors.username}
                 />
 
                 <PasswordInput
@@ -205,6 +270,7 @@ const HotelRegistrationForm = () => {
                   placeholder="Minimum 6 characters"
                   value={formData.password}
                   onChange={(value) => handleInputChange('password', value)}
+                  error={errors.password}
                 />
               </div>
 
@@ -221,6 +287,7 @@ const HotelRegistrationForm = () => {
                   placeholder="Enter hotel name"
                   value={formData.hotelName}
                   onChange={(value) => handleInputChange('hotelName', value)}
+                  error={errors.hotelName}
                 />
 
                 <FormInput
@@ -228,6 +295,7 @@ const HotelRegistrationForm = () => {
                   placeholder="Business registration number"
                   value={formData.registrationNo}
                   onChange={(value) => handleInputChange('registrationNo', value)}
+                  error={errors.registrationNo}
                 />
 
                 <FormInput
@@ -235,18 +303,21 @@ const HotelRegistrationForm = () => {
                   placeholder="Full address with city and postal code"
                   value={formData.address}
                   onChange={(value) => handleInputChange('address', value)}
+                  error={errors.address}
                 />
 
                 <FileUploadInput
                   label="Hotel Images"
                   placeholder="Upload hotel photos"
                   onChange={(value) => handleInputChange('uploadImages', value)}
+                  error={errors.uploadImages}
                 />
 
                 <FileUploadInput
                   label="Registration Documents"
                   placeholder="Upload business documents"
                   onChange={(value) => handleInputChange('uploadDocuments', value)}
+                  error={errors.uploadDocuments}
                 />
 
                 <div className="space-y-2">
@@ -258,8 +329,11 @@ const HotelRegistrationForm = () => {
                     value={formData.facilities}
                     onChange={(e) => handleInputChange('facilities', e.target.value)}
                     rows="4"
-                    className="w-full px-4 py-3 text-[15px] border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                    className={`w-full px-4 py-3 text-[15px] border-2 ${
+                      errors.facilities ? 'border-red-500' : 'border-gray-300'
+                    } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none`}
                   />
+                  {errors.facilities && <p className="text-red-500 text-[13px] mt-1">{errors.facilities}</p>}
                 </div>
               </div>
             </div>
