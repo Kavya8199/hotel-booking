@@ -1,11 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Eye, EyeOff } from 'lucide-react'
-<<<<<<< HEAD
  
-=======
-
->>>>>>> f129e2bf4c7d19d9836398f7927bc15d09ec3ede
 // Updated InputField Component
 const InputField = ({ label, placeholder, value, onChange, type = 'text' }) => {
   return (
@@ -24,19 +20,11 @@ const InputField = ({ label, placeholder, value, onChange, type = 'text' }) => {
     </div>
   )
 }
-<<<<<<< HEAD
  
 // Updated PasswordField Component with Working Eye Icon
 const PasswordField = ({ label, placeholder, value, onChange }) => {
   const [showPassword, setShowPassword] = useState(false)
  
-=======
-
-// Updated PasswordField Component with Working Eye Icon
-const PasswordField = ({ label, placeholder, value, onChange }) => {
-  const [showPassword, setShowPassword] = useState(false)
-
->>>>>>> f129e2bf4c7d19d9836398f7927bc15d09ec3ede
   return (
     <div className="w-full">
       <label className="block text-[16px] font-semibold text-gray-700 mb-2">
@@ -66,11 +54,7 @@ const PasswordField = ({ label, placeholder, value, onChange }) => {
     </div>
   )
 }
-<<<<<<< HEAD
  
-=======
-
->>>>>>> f129e2bf4c7d19d9836398f7927bc15d09ec3ede
 const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -205,3 +189,4 @@ const LoginForm = () => {
 }
  
 export default LoginForm
+ 
