@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const FormField = ({ label, placeholder, type = "text", value, onChange }) => {
+const FormField = ({ label, placeholder, type = "text", value, onChange, error }) => {
   return (
     <div className="space-y-2">
       <label className="block text-[14px] font-medium text-gray-700">
@@ -12,13 +12,16 @@ const FormField = ({ label, placeholder, type = "text", value, onChange }) => {
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full h-[50px] px-4 text-[15px] border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+        className={`w-full h-[50px] px-4 text-[15px] border-2 ${
+          error ? 'border-red-500' : 'border-gray-300'
+        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
       />
+      {error && <p className="text-red-500 text-[13px] mt-1">{error}</p>}
     </div>
   )
 }
 
-const PasswordField = ({ label, placeholder, value, onChange }) => {
+const PasswordField = ({ label, placeholder, value, onChange, error }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
@@ -32,7 +35,9 @@ const PasswordField = ({ label, placeholder, value, onChange }) => {
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full h-[50px] px-4 pr-12 text-[15px] border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+          className={`w-full h-[50px] px-4 pr-12 text-[15px] border-2 ${
+            error ? 'border-red-500' : 'border-gray-300'
+          } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
         />
         <button
           type="button"
@@ -51,6 +56,7 @@ const PasswordField = ({ label, placeholder, value, onChange }) => {
           )}
         </button>
       </div>
+      {error && <p className="text-red-500 text-[13px] mt-1">{error}</p>}
     </div>
   )
 }
@@ -65,6 +71,8 @@ const RegisterForm = () => {
     password: ''
   })
 
+  const [errors, setErrors] = useState({})
+
   const navigate = useNavigate()
 
   const handleInputChange = (field, value) => {
@@ -72,10 +80,68 @@ const RegisterForm = () => {
       ...prev,
       [field]: value
     }))
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: ''
+      }))
+    }
+  }
+
+  const validateForm = () => {
+    const newErrors = {}
+
+    // Validate Name
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required'
+    }
+
+    // Validate Email
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address'
+    }
+
+    // Validate Phone
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required'
+    }
+
+    // Validate Country
+    if (!formData.country.trim()) {
+      newErrors.country = 'Country is required'
+    }
+
+    // Validate Username
+    if (!formData.username.trim()) {
+      newErrors.username = 'Username is required'
+    }
+
+    // Validate Password
+    if (!formData.password) {
+      newErrors.password = 'Password is required'
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters'
+    }
+
+    return newErrors
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    
+    const validationErrors = validateForm()
+    
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      // Scroll to top to show errors
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+
+    // If validation passes, proceed with registration
     console.log('Form submitted:', formData)
     navigate('/register-success')
   }
@@ -103,6 +169,7 @@ const RegisterForm = () => {
             placeholder="Enter your name"
             value={formData.name}
             onChange={(value) => handleInputChange('name', value)}
+            error={errors.name}
           />
           
           <FormField
@@ -111,6 +178,7 @@ const RegisterForm = () => {
             type="email"
             value={formData.email}
             onChange={(value) => handleInputChange('email', value)}
+            error={errors.email}
           />
           
           <FormField
@@ -118,6 +186,7 @@ const RegisterForm = () => {
             placeholder="With Country Code"
             value={formData.phone}
             onChange={(value) => handleInputChange('phone', value)}
+            error={errors.phone}
           />
           
           <FormField
@@ -125,6 +194,7 @@ const RegisterForm = () => {
             placeholder="Country Name"
             value={formData.country}
             onChange={(value) => handleInputChange('country', value)}
+            error={errors.country}
           />
           
           <FormField
@@ -132,6 +202,7 @@ const RegisterForm = () => {
             placeholder="Choose a username"
             value={formData.username}
             onChange={(value) => handleInputChange('username', value)}
+            error={errors.username}
           />
           
           <PasswordField
@@ -139,6 +210,7 @@ const RegisterForm = () => {
             placeholder="6+ characters"
             value={formData.password}
             onChange={(value) => handleInputChange('password', value)}
+            error={errors.password}
           />
           
           {/* Terms and Conditions */}

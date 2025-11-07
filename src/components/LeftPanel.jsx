@@ -1,21 +1,22 @@
-import React from 'react';
+import React from 'react'
 
-const LeftPanel = () => {
+const ImageSection = () => {
   return (
-    <div className="relative w-[700px] h-[90vh] flex-shrink-0 ml-8 my-8">
-      {/* Background image moved slightly down */}
+    <div className="relative w-[700px] h-[90vh] flex-shrink-0 ml-8 my-8"> {/* added my-8 for top & bottom space */}
       <img 
-        src="https://static.codia.ai/image/2025-10-27/ePa9mWzjKZ.png" 
-        alt="DeccanStay Background" 
-        className="w-full h-full object-cover rounded-xl shadow-lg mt-4"
+        src="https://static.codia.ai/image/2025-10-27/H86w2cMBW9.png" 
+        alt="Hotel background" 
+        className="w-full h-full object-cover rounded-xl shadow-lg"  // shadow for nice depth
       />
       
-      {/* Text directly on image */}
+      {/* White overlay box */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <h1 className="text-[80px] font-medium leading-[120px] text-center drop-shadow-lg">
-          <span className="text-secondary-blue">Deccan</span>
-          <span className="text-dark-blue">Stay.</span>
-        </h1>
+        <div className="bg-white bg-opacity-70 border border-gray-300 rounded-[30px] w-[662px] h-[606px] flex items-center justify-center relative">
+          <h1 className="text-[80px] font-medium leading-[120px] text-center">
+            <span className="text-secondary-blue">Deccan</span>
+            <span className="text-dark-blue">Stay.</span>
+          </h1>
+        </div>
       </div>
 
       {/* Social icons at bottom */}
@@ -37,7 +38,7 @@ const LeftPanel = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LeftPanel;
+export default ImageSection
