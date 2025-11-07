@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ImageSection = () => {
+const LeftPanel = () => {
   return (
     <div className="relative w-[700px] h-[90vh] flex-shrink-0 ml-8 my-8"> {/* added my-8 for top & bottom space */}
       <img 
@@ -13,7 +13,8 @@ const ImageSection = () => {
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="bg-white bg-opacity-70 border border-gray-300 rounded-[30px] w-[662px] h-[606px] flex items-center justify-center relative">
           <h1 className="text-[80px] font-medium leading-[120px] text-center">
-            <span className="text-secondary-blue">Deccan</span>
+            {/* ✅ Updated color for "Deccan" */}
+            <span style={{ color: '#3256EB' }}>Deccan</span>
             <span className="text-dark-blue">Stay.</span>
           </h1>
         </div>
@@ -41,4 +42,4 @@ const ImageSection = () => {
   )
 }
 
-export default ImageSection
+export default LeftPanel

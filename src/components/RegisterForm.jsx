@@ -80,7 +80,6 @@ const RegisterForm = () => {
       ...prev,
       [field]: value
     }))
-    // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => ({
         ...prev,
@@ -91,57 +90,31 @@ const RegisterForm = () => {
 
   const validateForm = () => {
     const newErrors = {}
-
-    // Validate Name
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required'
-    }
-
-    // Validate Email
+    if (!formData.name.trim()) newErrors.name = 'Name is required'
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required'
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address'
     }
-
-    // Validate Phone
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required'
-    }
-
-    // Validate Country
-    if (!formData.country.trim()) {
-      newErrors.country = 'Country is required'
-    }
-
-    // Validate Username
-    if (!formData.username.trim()) {
-      newErrors.username = 'Username is required'
-    }
-
-    // Validate Password
+    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required'
+    if (!formData.country.trim()) newErrors.country = 'Country is required'
+    if (!formData.username.trim()) newErrors.username = 'Username is required'
     if (!formData.password) {
       newErrors.password = 'Password is required'
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters'
     }
-
     return newErrors
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    
     const validationErrors = validateForm()
-    
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
-      // Scroll to top to show errors
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
-
-    // If validation passes, proceed with registration
     console.log('Form submitted:', formData)
     navigate('/register-success')
   }
@@ -154,90 +127,39 @@ const RegisterForm = () => {
     <div className="flex-1 flex flex-col justify-center px-8 py-8">
       <div className="max-w-[500px] mx-auto w-full">
         {/* Header */}
-        <div className="mb-6">
+        <div className="mb-6 text-center">
           <h2 className="text-[28px] font-semibold leading-[1.2] text-gray-900 mb-1">
-            Create Account
+            <span style={{ color: '#3256EB' }}>Create</span> Account
           </h2>
           <p className="text-[14px] text-gray-600">
             Join us today and get started
           </p>
         </div>
-        
+
+        {/* Form Section */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <FormField
-            label="Name"
-            placeholder="Enter your name"
-            value={formData.name}
-            onChange={(value) => handleInputChange('name', value)}
-            error={errors.name}
-          />
-          
-          <FormField
-            label="Email"
-            placeholder="name@gmail.com"
-            type="email"
-            value={formData.email}
-            onChange={(value) => handleInputChange('email', value)}
-            error={errors.email}
-          />
-          
-          <FormField
-            label="Phone Number"
-            placeholder="With Country Code"
-            value={formData.phone}
-            onChange={(value) => handleInputChange('phone', value)}
-            error={errors.phone}
-          />
-          
-          <FormField
-            label="Country"
-            placeholder="Country Name"
-            value={formData.country}
-            onChange={(value) => handleInputChange('country', value)}
-            error={errors.country}
-          />
-          
-          <FormField
-            label="Username"
-            placeholder="Choose a username"
-            value={formData.username}
-            onChange={(value) => handleInputChange('username', value)}
-            error={errors.username}
-          />
-          
-          <PasswordField
-            label="Password"
-            placeholder="6+ characters"
-            value={formData.password}
-            onChange={(value) => handleInputChange('password', value)}
-            error={errors.password}
-          />
-          
-          {/* Terms and Conditions */}
+          <FormField label="Name" placeholder="Enter your name" value={formData.name} onChange={(value) => handleInputChange('name', value)} error={errors.name} />
+          <FormField label="Email" placeholder="name@gmail.com" type="email" value={formData.email} onChange={(value) => handleInputChange('email', value)} error={errors.email} />
+          <FormField label="Phone Number" placeholder="With Country Code" value={formData.phone} onChange={(value) => handleInputChange('phone', value)} error={errors.phone} />
+          <FormField label="Country" placeholder="Country Name" value={formData.country} onChange={(value) => handleInputChange('country', value)} error={errors.country} />
+          <FormField label="Username" placeholder="Choose a username" value={formData.username} onChange={(value) => handleInputChange('username', value)} error={errors.username} />
+          <PasswordField label="Password" placeholder="6+ characters" value={formData.password} onChange={(value) => handleInputChange('password', value)} error={errors.password} />
+
           <p className="text-[13px] leading-[1.5] text-gray-600 pt-2">
             By signing up, you agree to our{' '}
             <button type="button" className="text-blue-600 hover:underline">
               Terms & Conditions
             </button>
           </p>
-          
-          {/* Register Button */}
-          <button
-            type="submit"
-            className="w-full h-[50px] bg-blue-600 text-white text-[16px] font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
+
+          <button type="submit" className="w-full h-[50px] bg-blue-600 text-white text-[16px] font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
             Register
           </button>
 
-          {/* Login Link */}
           <div className="text-center mt-6 pt-4 border-t border-gray-200">
             <p className="text-[15px] text-gray-600">
               Already have an account?{' '}
-              <button
-                type="button"
-                onClick={handleLoginClick}
-                className="text-blue-600 font-semibold hover:underline transition-all"
-              >
+              <button type="button" onClick={handleLoginClick} className="text-blue-600 font-semibold hover:underline transition-all">
                 Login
               </button>
             </p>

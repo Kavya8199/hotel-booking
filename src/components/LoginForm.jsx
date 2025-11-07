@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Eye, EyeOff } from 'lucide-react'
 
-// Updated InputField Component
 const InputField = ({ label, placeholder, value, onChange, type = 'text' }) => {
   return (
     <div className="w-full">
@@ -21,7 +20,6 @@ const InputField = ({ label, placeholder, value, onChange, type = 'text' }) => {
   )
 }
 
-// Updated PasswordField Component with Working Eye Icon
 const PasswordField = ({ label, placeholder, value, onChange }) => {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -72,16 +70,15 @@ const LoginForm = () => {
 
   const handleGoogleLogin = () => {
     console.log('Google login initiated')
-    // Add Google OAuth logic here
   }
 
   return (
     <div className="flex-1 flex flex-col justify-center px-8 py-8">
       <div className="max-w-[500px] mx-auto w-full">
         {/* Header */}
-        <div className="mb-8">
-          <h2 className="text-[24px] font-semibold leading-[1.2] text-gray-900 mb-1">
-            Welcome Back
+        <div className="mb-8 text-center">
+          <h2 className="text-[24px] font-semibold leading-[1.2] mb-1 text-gray-900">
+            <span style={{ color: '#3256EB' }}>Welcome</span> Back
           </h2>
           <p className="text-[13px] text-gray-600">
             Please login to your account
