@@ -13,8 +13,10 @@ const ImageSection = () => {
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="bg-white bg-opacity-70 border border-gray-300 rounded-[30px] w-[550px] h-[510px] flex items-center justify-center relative">
           <h1 className="text-[80px] font-medium leading-[110px] text-center">
-            <span className="text-secondary-blue">Deccan</span>
-            <span className="text-dark-blue">Stay.</span>
+           <h1 className="text-[55px] font-semibold leading-[80px] text-center">
+  <span className="text-blue-600">Deccan</span>
+  <span className="text-black">Stay.</span>
+</h1>
           </h1>
         </div>
       </div>
