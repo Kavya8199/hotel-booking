@@ -134,7 +134,6 @@ const HotelRegistrationForm = () => {
       ...prev,
       [name]: value
     }))
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -146,7 +145,6 @@ const HotelRegistrationForm = () => {
   const validateForm = () => {
     const newErrors = {}
 
-    // Personal Information validation
     if (!formData.name.trim()) newErrors.name = 'Full name is required'
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required'
@@ -162,8 +160,6 @@ const HotelRegistrationForm = () => {
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters'
     }
-
-    // Hotel Information validation
     if (!formData.hotelName.trim()) newErrors.hotelName = 'Hotel name is required'
     if (!formData.registrationNo.trim()) newErrors.registrationNo = 'Registration number is required'
     if (!formData.address.trim()) newErrors.address = 'Hotel address is required'
@@ -176,12 +172,9 @@ const HotelRegistrationForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    
     const validationErrors = validateForm()
-    
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
-      // Scroll to first error
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
@@ -198,17 +191,20 @@ const HotelRegistrationForm = () => {
     <div className="min-h-screen bg-gray-50 px-6 py-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-center mb-6">
+        <div className="flex flex-col items-center justify-center mb-6">
           <h2 className="text-[32px] font-semibold text-gray-900 text-center">
-            Register Your Hotel
+            <span className="text-[#3256EB]">Register</span> Your Hotel
           </h2>
+          <p className="text-gray-600 text-[15px] mt-2">
+            List your property and grow your bookings with us!
+          </p>
         </div>
 
-        {/* Form Container with Card */}
+        {/* Form Container */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-6">
-              {/* Left Column - Personal Information */}
+              {/* Left Column - Personal Info */}
               <div className="space-y-5">
                 <div className="mb-6">
                   <h3 className="text-[18px] font-semibold text-gray-900 pb-2 border-b border-gray-200">
@@ -216,65 +212,16 @@ const HotelRegistrationForm = () => {
                   </h3>
                 </div>
 
-                <FormInput
-                  label="Full Name"
-                  placeholder="Enter your full name"
-                  value={formData.name}
-                  onChange={(value) => handleInputChange('name', value)}
-                  error={errors.name}
-                />
-
-                <FormInput
-                  label="Email Address"
-                  placeholder="name@example.com"
-                  type="email"
-                  value={formData.email}
-                  onChange={(value) => handleInputChange('email', value)}
-                  error={errors.email}
-                />
-
-                <FormInput
-                  label="Phone Number"
-                  placeholder="With country code (e.g., +1234567890)"
-                  value={formData.phoneNo}
-                  onChange={(value) => handleInputChange('phoneNo', value)}
-                  error={errors.phoneNo}
-                />
-
-                <FormInput
-                  label="Country"
-                  placeholder="Select your country"
-                  value={formData.country}
-                  onChange={(value) => handleInputChange('country', value)}
-                  error={errors.country}
-                />
-
-                <FormInput
-                  label="National Identity Card"
-                  placeholder="Enter your NIC number"
-                  value={formData.nic}
-                  onChange={(value) => handleInputChange('nic', value)}
-                  error={errors.nic}
-                />
-
-                <FormInput
-                  label="Username"
-                  placeholder="Choose a username"
-                  value={formData.username}
-                  onChange={(value) => handleInputChange('username', value)}
-                  error={errors.username}
-                />
-
-                <PasswordInput
-                  label="Password"
-                  placeholder="Minimum 6 characters"
-                  value={formData.password}
-                  onChange={(value) => handleInputChange('password', value)}
-                  error={errors.password}
-                />
+                <FormInput label="Full Name" placeholder="Enter your full name" value={formData.name} onChange={(value) => handleInputChange('name', value)} error={errors.name} />
+                <FormInput label="Email Address" placeholder="name@example.com" type="email" value={formData.email} onChange={(value) => handleInputChange('email', value)} error={errors.email} />
+                <FormInput label="Phone Number" placeholder="With country code (e.g., +1234567890)" value={formData.phoneNo} onChange={(value) => handleInputChange('phoneNo', value)} error={errors.phoneNo} />
+                <FormInput label="Country" placeholder="Select your country" value={formData.country} onChange={(value) => handleInputChange('country', value)} error={errors.country} />
+                <FormInput label="National Identity Card" placeholder="Enter your NIC number" value={formData.nic} onChange={(value) => handleInputChange('nic', value)} error={errors.nic} />
+                <FormInput label="Username" placeholder="Choose a username" value={formData.username} onChange={(value) => handleInputChange('username', value)} error={errors.username} />
+                <PasswordInput label="Password" placeholder="Minimum 6 characters" value={formData.password} onChange={(value) => handleInputChange('password', value)} error={errors.password} />
               </div>
 
-              {/* Right Column - Hotel Information */}
+              {/* Right Column - Hotel Info */}
               <div className="space-y-5">
                 <div className="mb-6">
                   <h3 className="text-[18px] font-semibold text-gray-900 pb-2 border-b border-gray-200">
@@ -282,43 +229,12 @@ const HotelRegistrationForm = () => {
                   </h3>
                 </div>
 
-                <FormInput
-                  label="Hotel Name"
-                  placeholder="Enter hotel name"
-                  value={formData.hotelName}
-                  onChange={(value) => handleInputChange('hotelName', value)}
-                  error={errors.hotelName}
-                />
+                <FormInput label="Hotel Name" placeholder="Enter hotel name" value={formData.hotelName} onChange={(value) => handleInputChange('hotelName', value)} error={errors.hotelName} />
+                <FormInput label="Registration Number" placeholder="Business registration number" value={formData.registrationNo} onChange={(value) => handleInputChange('registrationNo', value)} error={errors.registrationNo} />
+                <FormInput label="Hotel Address" placeholder="Full address with city and postal code" value={formData.address} onChange={(value) => handleInputChange('address', value)} error={errors.address} />
 
-                <FormInput
-                  label="Registration Number"
-                  placeholder="Business registration number"
-                  value={formData.registrationNo}
-                  onChange={(value) => handleInputChange('registrationNo', value)}
-                  error={errors.registrationNo}
-                />
-
-                <FormInput
-                  label="Hotel Address"
-                  placeholder="Full address with city and postal code"
-                  value={formData.address}
-                  onChange={(value) => handleInputChange('address', value)}
-                  error={errors.address}
-                />
-
-                <FileUploadInput
-                  label="Hotel Images"
-                  placeholder="Upload hotel photos"
-                  onChange={(value) => handleInputChange('uploadImages', value)}
-                  error={errors.uploadImages}
-                />
-
-                <FileUploadInput
-                  label="Registration Documents"
-                  placeholder="Upload business documents"
-                  onChange={(value) => handleInputChange('uploadDocuments', value)}
-                  error={errors.uploadDocuments}
-                />
+                <FileUploadInput label="Hotel Images" placeholder="Upload hotel photos" onChange={(value) => handleInputChange('uploadImages', value)} error={errors.uploadImages} />
+                <FileUploadInput label="Registration Documents" placeholder="Upload business documents" onChange={(value) => handleInputChange('uploadDocuments', value)} error={errors.uploadDocuments} />
 
                 <div className="space-y-2">
                   <label className="block text-[14px] font-medium text-gray-700">
@@ -344,8 +260,8 @@ const HotelRegistrationForm = () => {
                 By registering, you agree to our{' '}
                 <button type="button" className="text-blue-600 hover:underline">
                   Terms & Conditions
-                </button>
-                {' '}and{' '}
+                </button>{' '}
+                and{' '}
                 <button type="button" className="text-blue-600 hover:underline">
                   Privacy Policy
                 </button>
