@@ -81,9 +81,17 @@ const RegisterForm = () => {
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
     if (!formData.country.trim()) newErrors.country = "Country is required";
     if (!formData.username.trim()) newErrors.username = "Username is required";
-    if (!formData.password) newErrors.password = "Password is required";
-    else if (formData.password.length < 6)
-      newErrors.password = "Password must be at least 6 characters";
+
+    // ✅ Updated Password Validation (includes special character)
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(formData.password)
+    ) {
+      newErrors.password =
+        "Password must be at least 8 characters and include uppercase, lowercase, number, and special character";
+    }
+
     return newErrors;
   };
 
@@ -179,7 +187,7 @@ const RegisterForm = () => {
           />
           <PasswordField
             label="Password"
-            placeholder="6+ characters"
+            placeholder="8+ characters (uppercase, lowercase, number, special)"
             value={formData.password}
             onChange={(v) => handleInputChange("password", v)}
             error={errors.password}
