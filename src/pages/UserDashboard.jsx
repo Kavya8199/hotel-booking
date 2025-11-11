@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React from "react"
 // import NotesPanel from "./NotesPanel"
 // import BookingCards from "./BookingCards" // ✅ Booking cards component
@@ -601,6 +602,8 @@
 
 
 
+=======
+>>>>>>> e6007328cd1c77f74af8bc529db31c3f48275d07
 
 
 

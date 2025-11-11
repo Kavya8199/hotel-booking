@@ -1,5 +1,9 @@
 import React from 'react'
+<<<<<<< HEAD
 import Breadcrumb from '../components/Breadcrumb'
+=======
+import Breadcrumb from '../components/BreadCrumb'
+>>>>>>> e6007328cd1c77f74af8bc529db31c3f48275d07
 import HotelTitle from '../components/HotelTitle'
 import PhotoGallery from '../components/PhotoGallery'
 import AboutSection from '../components/AboutSection'
