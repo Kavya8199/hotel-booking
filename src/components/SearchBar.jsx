@@ -1,3 +1,4 @@
+
 import React from 'react'
 
 const SearchBar = () => {
@@ -34,3 +35,4 @@ const SearchBar = () => {
 }
 
 export default SearchBar
+

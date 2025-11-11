@@ -1,46 +1,3 @@
-// import React from 'react'
-
-// const BookingForm = () => {
-//   return (
-//     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-//       <div className="bg-lightBlue rounded-full p-8">
-//         <div className="flex flex-wrap items-center justify-center gap-4">
-//           <div className="bg-white rounded-xl p-4 shadow-lg flex items-center space-x-4 min-w-0 flex-1 max-w-xs">
-//             <img src="https://static.codia.ai/image/2025-10-23/FcvwZJ2PRA.png" alt="Calendar" className="w-6 h-6" />
-//             <span className="font-inter font-semibold text-black">Check Available</span>
-//           </div>
-          
-//           <div className="bg-white rounded-xl p-4 shadow-lg flex items-center space-x-4 min-w-0 flex-1 max-w-xs">
-//             <img src="https://static.codia.ai/image/2025-10-23/OKFUrF8pcF.png" alt="Person" className="w-6 h-6" />
-//             <span className="font-inter font-semibold text-black">Person</span>
-//             <span className="font-inter font-semibold text-black">2</span>
-//             <img src="https://static.codia.ai/image/2025-10-23/2pPc28aBCw.png" alt="Arrow" className="w-5 h-3" />
-//           </div>
-          
-//           <div className="bg-white rounded-xl p-4 shadow-lg flex items-center space-x-4 min-w-0 flex-1 max-w-xs">
-//             <img src="https://static.codia.ai/image/2025-10-23/7KgrZJG86c.png" alt="Location" className="w-6 h-6" />
-//             <span className="font-inter font-semibold text-black">Select Location</span>
-//           </div>
-          
-//           <button className="bg-primary text-white px-8 py-4 rounded-xl font-inter font-semibold text-xl shadow-lg">
-//             Search
-//           </button>
-//         </div>
-//       </div>
-      
-//       <div className="text-center mt-8">
-//         <button className="bg-primary text-white px-8 py-3 rounded-lg font-medium">
-//           Show More
-//         </button>
-//       </div>
-//     </section>
-//   )
-// }
-
-// export default BookingForm
-
-
-
 
 
 
@@ -153,5 +110,6 @@ const HomeBookingForm = () => {
 };
 
 export default HomeBookingForm;
+
 
 

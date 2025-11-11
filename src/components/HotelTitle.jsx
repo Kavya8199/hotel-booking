@@ -1,21 +1,3 @@
-// import React from 'react'
-
-// const HotelTitle = () => {
-//   return (
-//     <div className="text-center mb-12">
-//       <h1 className="text-36 font-bold leading-54 text-primary mb-2">
-//         Blue Origin Fams
-//       </h1>
-//       <p className="text-18 leading-27 text-gray-text">
-//         Galle, Sri Lanka
-//       </p>
-//     </div>
-//   )
-// }
-
-// export default HotelTitle
-
-
 
 
 
@@ -34,3 +16,4 @@ const HotelTitle = ({ hotel }) => {
 };
 
 export default HotelTitle;
+

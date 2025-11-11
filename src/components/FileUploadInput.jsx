@@ -1,60 +1,3 @@
-// import React, { useRef } from 'react'
-
-// const FileUploadInput = ({ label, placeholder, onChange }) => {
-//   const fileInputRef = useRef(null)
-
-//   const handleClick = () => {
-//     fileInputRef.current?.click()
-//   }
-
-//   const handleFileChange = (e) => {
-//     const file = e.target.files[0]
-//     onChange(file)
-//   }
-
-//   return (
-//     <div className="space-y-3">
-//       <label className="block text-lg font-normal text-black">
-//         {label}
-//       </label>
-//       <div
-//         onClick={handleClick}
-//         className="w-full h-16 px-6 flex items-center text-lg text-text-gray bg-white border-2 border-border-gray rounded-lg cursor-pointer hover:border-primary-blue transition-colors duration-200"
-//       >
-//         {placeholder}
-//       </div>
-//       <input
-//         ref={fileInputRef}
-//         type="file"
-//         onChange={handleFileChange}
-//         className="hidden"
-//         accept="image/*,.pdf,.doc,.docx"
-//       />
-//     </div>
-//   )
-// }
-
-// export default FileUploadInput
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -123,3 +66,4 @@ const FileUploadInput = ({ label, placeholder, onChange, multiple = true }) => {
 };
 
 export default FileUploadInput;
+

@@ -1,3 +1,4 @@
+
 export const hotels = [
   {
     id: 1,
@@ -70,3 +71,4 @@ export const hotels = [
       "Bobox is a boutique mountain lodge located in Kandy with scenic views, elegant interiors, and an on-site tea tasting experience.",
   },
 ];
+

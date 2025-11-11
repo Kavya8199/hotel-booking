@@ -19,7 +19,7 @@ const ActionButtons = () => {
       >
         Pay Now
       </button>
-      
+
       <button
         onClick={handleCancel}
         className="px-8 py-3 bg-light-gray text-gray-500 text-lg rounded hover:bg-gray-200 transition-colors"

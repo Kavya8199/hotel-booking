@@ -1,73 +1,3 @@
-// import React from 'react'
-
-// const HouseWithBackyard = () => {
-//   const properties = [
-//     {
-//       id: 1,
-//       name: "Shangri-La",
-//       location: "Colombo, Sri Lanka",
-//       image: "https://static.codia.ai/image/2025-10-23/zERcJYLyjx.png",
-//       badge: "Popular Choice"
-//     },
-//     {
-//       id: 2,
-//       name: "Top View",
-//       location: "Hikkaduwe, Sri Lanka",
-//       image: "https://static.codia.ai/image/2025-10-23/SX5O4Q0ROv.png"
-//     },
-//     {
-//       id: 3,
-//       name: "Green Villa",
-//       location: "Kandy, Sri Lanka",
-//       image: "https://static.codia.ai/image/2025-10-23/pOOJkc17HT.png"
-//     },
-//     {
-//       id: 4,
-//       name: "Wodden Pit",
-//       location: "Ambalangode, Sri Lanka",
-//       image: "https://static.codia.ai/image/2025-10-23/d9WysAmfF0.png"
-//     }
-//   ]
-
-//   return (
-//     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-//       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-//         {properties.map((property) => (
-//           <div key={property.id} className="group cursor-pointer">
-//             <div className="relative mb-4">
-//               <img 
-//                 src={property.image} 
-//                 alt={property.name}
-//                 className="w-full h-44 object-cover rounded-2xl"
-//               />
-//               {property.badge && (
-//                 <div className="absolute top-4 right-4 bg-primary text-white px-4 py-2 rounded-tl-2xl rounded-br-2xl text-sm">
-//                   {property.badge}
-//                 </div>
-//               )}
-//             </div>
-//             <h3 className="text-xl font-normal text-secondary mb-1">{property.name}</h3>
-//             <p className="text-gray text-sm">{property.location}</p>
-//           </div>
-//         ))}
-//       </div>
-//     </section>
-//   )
-// }
-
-// export default HouseWithBackyard
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 import React from "react";
@@ -137,3 +67,4 @@ const HouseWithBackyard = () => {
 };
 
 export default HouseWithBackyard;
+

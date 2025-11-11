@@ -1,3 +1,4 @@
+
 import React from 'react'
 import LeftPanel from './LeftPanel'
 import RegisterForm from './RegisterForm'
@@ -12,3 +13,4 @@ const RegisterPage = () => {
 }
 
 export default RegisterPage
+

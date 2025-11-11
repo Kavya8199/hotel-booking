@@ -1,65 +1,3 @@
-// import React from "react";
-// import MostPicked from "../components/MostPicked";
-// import HouseWithBackyard from "../components/HouseWithBackyard";
-// import HotelsLivingRoom from "../components/HotelsLivingRoom";
-
-// const HotelsList = () => {
-//   return (
-//     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-//       {/* Page Title */}
-//       <h1 className="text-3xl font-bold text-primary mb-10 text-center">
-//         Available Hotels
-//       </h1>
-
-//       <p className="text-center text-gray-600 mb-14">
-//         Here you can explore and book the best hotels with <span className="font-semibold text-secondary">Deccan Stay</span>.
-//       </p>
-
-//       {/* Hotel Sections */}
-//       <MostPicked />
-//       <HouseWithBackyard />
-//       <HotelsLivingRoom />
-//     </div>
-//   );
-// };
-
-// export default HotelsList;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import React, { useState, useEffect, useCallback } from "react";
 
@@ -225,3 +163,4 @@ const HotelList = () => {
 };
 
 export default HotelList;
+

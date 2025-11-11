@@ -1,3 +1,4 @@
+
 import React from 'react'
 import SearchBar from './SearchBar'
 import FilterControls from './FilterControls'
@@ -27,3 +28,4 @@ const MainContent = () => {
 }
 
 export default MainContent
+

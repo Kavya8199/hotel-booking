@@ -1,3 +1,4 @@
+
 import React from 'react'
 
 const LoginButton = () => {
@@ -10,5 +11,6 @@ const LoginButton = () => {
     </button>
   )
 }
+
 
 export default LoginButton

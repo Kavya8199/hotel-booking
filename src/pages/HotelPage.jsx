@@ -1,5 +1,7 @@
 import React from 'react'
-import Breadcrumb from '../components/Breadcrumb'
+
+import Breadcrumb from '../components/BreadCrumb'
+
 import HotelTitle from '../components/HotelTitle'
 import PhotoGallery from '../components/PhotoGallery'
 import AboutSection from '../components/AboutSection'

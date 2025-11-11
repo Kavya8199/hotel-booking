@@ -1,3 +1,4 @@
+
 import React from 'react'
 
 const BookingDetails = () => {
@@ -30,3 +31,4 @@ const BookingDetails = () => {
 }
 
 export default BookingDetails
+

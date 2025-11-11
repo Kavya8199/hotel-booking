@@ -1,58 +1,3 @@
-// import React from 'react'
-
-// const BookingStepper = () => {
-//   return (
-//     <div className="flex items-center space-x-8">
-//       {/* Step 1 - Active */}
-//       <div className="flex flex-col items-center">
-//         <div className="w-15 h-15 rounded-full bg-button-blue border-2 border-border-gray flex items-center justify-center relative">
-//           <svg width="25" height="17" viewBox="0 0 25 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-//             <path d="M2 8.5L9 15.5L23 1.5" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-//           </svg>
-//         </div>
-//       </div>
-
-//       {/* Connector Line */}
-//       <div className="w-28 h-px bg-border-gray"></div>
-
-//       {/* Step 2 */}
-//       <div className="flex flex-col items-center">
-//         <div className="w-12 h-12 rounded-full bg-white border-2 border-border-gray flex items-center justify-center">
-//           <span className="text-step-gray font-light text-2xl">2</span>
-//         </div>
-//       </div>
-
-//       {/* Connector Line */}
-//       <div className="w-28 h-px bg-border-gray"></div>
-
-//       {/* Step 3 */}
-//       <div className="flex flex-col items-center">
-//         <div className="w-12 h-12 rounded-full bg-white border-2 border-border-gray flex items-center justify-center">
-//           <span className="text-step-gray font-light text-2xl">3</span>
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default BookingStepper
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -104,4 +49,5 @@ const BookingStepper = () => {
 };
 
 export default BookingStepper;
+
 

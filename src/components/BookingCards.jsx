@@ -1,3 +1,4 @@
+
 import React from 'react'
 
 const BookingCards = () => {
@@ -51,3 +52,4 @@ const BookingCards = () => {
 }
 
 export default BookingCards
+
