@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react'
 import NavigationHeader from './NavigationHeader'
 import ConfirmationContent from './ConfirmationContent'
@@ -12,3 +13,19 @@ const BookingConfirmation = () => {
 }
 
 export default BookingConfirmation
+=======
+import React from 'react'
+import NavigationHeader from './NavigationHeader'
+import ConfirmationContent from './ConfirmationContent'
+
+const BookingConfirmation = () => {
+  return (
+    <div className="w-full max-w-[1440px] mx-auto bg-white font-poppins">
+      <NavigationHeader />
+      <ConfirmationContent />
+    </div>
+  )
+}
+
+export default BookingConfirmation
+>>>>>>> e6007328cd1c77f74af8bc529db31c3f48275d07
