@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PaymentForm from "./PaymentForm";
@@ -8,6 +6,12 @@ const PaymentContent = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const bookingData = location.state;
+
+  // 🛡️ Safe formatter function
+  const formatPrice = (value) => {
+    const num = Number(value);
+    return isNaN(num) ? "₹0" : `₹${num.toLocaleString("en-IN")}`;
+  };
 
   if (!bookingData) {
     return (
@@ -25,6 +29,15 @@ const PaymentContent = () => {
     );
   }
 
+  // 🧩 Extract safely
+  const {
+    hotelName = "Unknown Hotel",
+    checkIn = "-",
+    checkOut = "-",
+    days = 0,
+    totalPrice = 0,
+  } = bookingData;
+
   return (
     <div className="flex flex-col lg:flex-row gap-12 py-10">
       {/* 🏨 Booking Summary */}
@@ -32,22 +45,24 @@ const PaymentContent = () => {
         <h2 className="text-2xl font-semibold text-primary-blue mb-4">
           Booking Summary
         </h2>
+
         <p className="text-gray-700">
-          <strong>Hotel:</strong> {bookingData.hotelName}
+          <strong>Hotel:</strong> {hotelName}
         </p>
         <p className="text-gray-700">
-          <strong>Check-in:</strong> {bookingData.checkIn}
+          <strong>Check-in:</strong> {checkIn}
         </p>
         <p className="text-gray-700">
-          <strong>Check-out:</strong> {bookingData.checkOut}
+          <strong>Check-out:</strong> {checkOut}
         </p>
         <p className="text-gray-700">
-          <strong>Days:</strong> {bookingData.days}
+          <strong>Days:</strong> {days}
         </p>
+
         <p className="text-gray-800 text-lg mt-4">
           <strong>Total:</strong>{" "}
           <span className="text-primary-blue font-semibold">
-            ₹{bookingData.totalPrice.toLocaleString("en-IN")}
+            {formatPrice(totalPrice)}
           </span>
         </p>
       </div>
@@ -59,4 +74,3 @@ const PaymentContent = () => {
 };
 
 export default PaymentContent;
-

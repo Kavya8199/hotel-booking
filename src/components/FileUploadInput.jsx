@@ -1,6 +1,3 @@
-
-
-
 import React, { useState } from "react";
 
 const FileUploadInput = ({ label, placeholder, onChange, multiple = true }) => {
@@ -66,4 +63,3 @@ const FileUploadInput = ({ label, placeholder, onChange, multiple = true }) => {
 };
 
 export default FileUploadInput;
-

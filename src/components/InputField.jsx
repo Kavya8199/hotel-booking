@@ -1,4 +1,3 @@
-
 import React from 'react'
 
 const InputField = ({ label, placeholder, value, onChange, type = 'text' }) => {
@@ -19,4 +18,3 @@ const InputField = ({ label, placeholder, value, onChange, type = 'text' }) => {
 }
 
 export default InputField
-

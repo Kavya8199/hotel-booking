@@ -1,28 +1,23 @@
-
-
-
-// 📄 src/components/Headers.jsx
-import React from 'react'
+import React, { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 
 const Headers = () => {
+  const { adminName, adminEmail } = useContext(AuthContext);
+
   return (
     <header className="bg-white px-6 py-6 border-b border-gray-200 shadow-sm">
       <div className="flex justify-between items-center">
+        
         {/* 👋 Left Section */}
         <div>
           <h2 className="text-xl font-semibold text-gray-800 mb-1">
-            Hello, Admin
+            Hello, {adminName || "Admin"}
           </h2>
           <p className="text-sm text-gray-500">Have a nice day</p>
         </div>
 
         {/* 🎛 Right Section */}
         <div className="flex items-center space-x-6">
-         
-          
-
-          
-          
 
           {/* Notification Icon */}
           <img
@@ -36,12 +31,12 @@ const Headers = () => {
 
           {/* Profile Section */}
           <div className="flex items-center space-x-4 cursor-pointer">
-           
             
             <div>
-              <p className="font-semibold text-gray-800">Welcome</p>
-              <p className="text-sm text-gray-600">Admin</p>
+              <p className="font-semibold text-gray-800">{adminName || "Admin"}</p>
+              <p className="text-sm text-gray-600">{adminEmail || "admin@deccanstay.com"}</p>
             </div>
+
             <img
               src="https://static.codia.ai/image/2025-10-28/8vaQ6zP589.png"
               alt="Dropdown"
@@ -51,7 +46,7 @@ const Headers = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Headers
+export default Headers;

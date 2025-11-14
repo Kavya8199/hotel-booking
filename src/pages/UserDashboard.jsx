@@ -1,165 +1,290 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Refund from "./Refund";
+import Message from "./Message";
+import Help from "./Help";
+import Setting from "./Setting";
 
-import React, { useState } from "react"
-import Sidebars from "./Sidebars"
-import Headerss from "./Headerss"
-import Dashboard from "./Dashboard"
+/* ======================= 🧭 SIDEBAR ======================= */
+const Sidebars = ({ activePage, setActivePage }) => {
+  const navigate = useNavigate();
 
-import BookingCards from "../components/BookingCards"
-import NotesPanel from "../components/NotesPanel"
-import SearchBar from "../components/SearchBar"
-import FilterControls from "../components/FilterControls"
-
-const UserDashboard = () => {
-  const [activePage, setActivePage] = useState("dashboard")
+  const menuItems = [
+    { icon: "https://static.codia.ai/image/2025-10-28/ueP3kyqN1D.png", label: "My Bookings", key: "My Bookings" },
+    { icon: "https://static.codia.ai/image/2025-10-28/oQ31oYDaf8.png", label: "Refunds", key: "refunds" },
+    { icon: "https://static.codia.ai/image/2025-10-28/Y6kOvWn5KB.png", label: "Messages", key: "messages" },
+    { icon: "https://static.codia.ai/image/2025-10-28/Xsfj5zyzaB.png", label: "Help", key: "help" },
+    { icon: "https://static.codia.ai/image/2025-10-28/cuopThxdCh.png", label: "Settings", key: "settings" },
+  ];
 
   return (
-    <div className="flex min-h-screen bg-gray-50 font-poppins">
-      {/* ✅ Sidebar */}
-      <Sidebars activePage={activePage} setActivePage={setActivePage} />
+    <aside className="w-64 bg-white shadow-md flex flex-col py-6 justify-between">
+      <div>
+        <h2 className="font-poppins font-medium text-4xl text-dark px-6 mb-8">
+          <span className="text-secondary">Deccan</span>Stay
+        </h2>
 
-      {/* ✅ Main Content */}
+        <nav>
+          {menuItems.map((item) => (
+            <button
+              key={item.key}
+              onClick={() => setActivePage(item.key)}
+              className={`flex items-center w-full px-6 py-3 text-lg transition-colors ${
+                activePage === item.key
+                  ? "bg-blue-700 text-white"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              <img src={item.icon} alt={item.label} className="w-6 h-6 object-contain" />
+              <span className="ml-3">{item.label}</span>
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      {/* 🔙 Back to Confirmation Page */}
+      <button
+        onClick={() => navigate("/Booking-confirmation")}
+        className="flex items-center justify-center bg-blue-100 text-blue-700 mx-6 py-3 rounded-lg font-medium hover:bg-blue-200 transition"
+      >
+        ← Back
+      </button>
+    </aside>
+  );
+};
+
+/* ======================= 🌤 HEADER ======================= */
+const Headerss = () => (
+  <header className="bg-gray-50 px-6 py-6 border-b border-gray-200">
+    <div className="flex justify-between items-center">
+      <div>
+        <h2 className="text-xl font-semibold text-black tracking-wide mb-1">
+          Hello, User
+        </h2>
+        <p className="text-sm text-gray-500">Have a nice day</p>
+      </div>
+
+      <div className="flex items-center gap-6">
+        <img
+          src="https://static.codia.ai/image/2025-10-28/WuAnhG6pOY.png"
+          alt="Notifications"
+          className="w-6 h-6"
+        />
+        <div className="w-px h-8 bg-gray-300"></div>
+        <div className="flex items-center gap-3 pr-2">
+          <img
+            src="https://static.codia.ai/image/2025-10-28/dBKtQVuRL8.png"
+            alt="Profile"
+            className="w-10 h-10 rounded-full"
+          />
+          <div>
+            <p className="font-semibold text-black">Welcome</p>
+            <p className="text-xs text-gray-500">User</p>
+          </div>
+          <img
+            src="https://static.codia.ai/image/2025-10-28/oqqvzXHJ08.png"
+            alt="Dropdown"
+            className="w-5 h-5"
+          />
+        </div>
+      </div>
+    </div>
+  </header>
+);
+
+/* ======================= 🔍 SEARCH + SORT ======================= */
+const SearchAndSort = ({ searchTerm, setSearchTerm, sortOrder, setSortOrder }) => (
+  <div className="flex items-center justify-between mb-8">
+    {/* Search */}
+    <div className="flex items-center bg-white rounded-2xl px-5 py-3 flex-1 max-w-3xl shadow-sm">
+      <img
+        src="https://static.codia.ai/image/2025-10-28/bms7dwkkhZ.png"
+        alt="Search"
+        className="w-4 h-4 mr-4"
+      />
+      <input
+        type="text"
+        placeholder="Search by hotel name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="flex-1 outline-none text-base text-gray-600"
+      />
+    </div>
+
+    {/* Sort */}
+    <div className="flex items-center gap-3 ml-6">
+      <span className="font-semibold text-gray-600">Sort by</span>
+      <select
+        value={sortOrder}
+        onChange={(e) => setSortOrder(e.target.value)}
+        className="border border-gray-300 rounded-lg px-3 py-2 text-gray-700 outline-none"
+      >
+        <option value="asc">A → Z</option>
+        <option value="desc">Z → A</option>
+      </select>
+    </div>
+  </div>
+);
+
+/* ======================= 📦 MODAL ======================= */
+const BookingModal = ({ booking, onClose }) => {
+  if (!booking) return null;
+
+  return (
+    <div
+      className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-2xl shadow-xl max-w-lg w-full p-6 relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl"
+        >
+          ✕
+        </button>
+
+        <img
+          src={booking.image}
+          alt={booking.name}
+          className="w-full h-56 object-cover rounded-xl mb-4"
+        />
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+          {booking.name}
+        </h2>
+        <p className="text-gray-500 mb-3">📍 {booking.location}</p>
+        <p className="text-gray-600">🗓 Check-in: {booking.checkin}</p>
+        <p className="text-gray-600 mb-2">🗓 Check-out: {booking.checkout}</p>
+        <p className="text-lg font-medium text-gray-800">
+          💰 Price: ₹{booking.price.toLocaleString()}
+        </p>
+        <p className="text-sm text-gray-500 mt-1">
+          Status: <span className="font-semibold text-green-600">{booking.status}</span>
+        </p>
+
+        <div className="mt-6 text-right">
+          <button
+            onClick={onClose}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ======================= 📊 MAIN DASHBOARD ======================= */
+const UserDashboard = () => {
+  const [activePage, setActivePage] = useState("dashboard");
+  const [bookings, setBookings] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [selectedBooking, setSelectedBooking] = useState(null);
+
+  // Load bookings from localStorage
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("userBookings")) || [];
+    setBookings(stored);
+  }, []);
+
+  const filteredBookings = bookings
+    .filter((b) => b.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    .sort((a, b) =>
+      sortOrder === "asc"
+        ? a.name.localeCompare(b.name)
+        : b.name.localeCompare(a.name)
+    );
+
+  const renderContent = () => {
+    switch (activePage) {
+      case "refunds":
+        return <Refund />;
+      case "messages":
+        return <Message />;
+      case "help":
+        return <Help />;
+      case "settings":
+        return <Setting />;
+      default:
+        return (
+          <>
+            <SearchAndSort
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />
+
+            {filteredBookings.length === 0 ? (
+              <p className="text-gray-500 text-center mt-10">
+                No bookings found.
+              </p>
+            ) : (
+              <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredBookings.map((booking) => (
+                  <div
+                    key={booking.id}
+                    className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition"
+                  >
+                    <img
+                      src={booking.image}
+                      alt={booking.name}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="p-6">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-1">
+                        {booking.name}
+                      </h3>
+                      <p className="text-sm text-gray-500 mb-2">
+                        📍 {booking.location}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        🗓 {booking.checkin} → {booking.checkout}
+                      </p>
+                      <p className="text-sm text-gray-700 font-medium mt-2">
+                        💰 ₹{booking.price.toLocaleString()}{" "}
+                        <span className="text-gray-500 text-sm ml-1">
+                          ({booking.status})
+                        </span>
+                      </p>
+
+                      <button
+                        onClick={() => setSelectedBooking(booking)}
+                        className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition"
+                      >
+                        View Details
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </section>
+            )}
+          </>
+        );
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen bg-gray-100">
+      <Sidebars activePage={activePage} setActivePage={setActivePage} />
       <div className="flex-1 flex flex-col">
         <Headerss />
-
-        <main className="flex-1 p-8 overflow-y-auto">
-          {/* --- DASHBOARD --- */}
-          {activePage === "dashboard" && <Dashboard />}
-
-          {/* --- BOOKINGS --- */}
-          {activePage === "bookings" && (
-            <>
-              <h1 className="text-3xl font-bold text-primary mb-8">
-                User Bookings
-              </h1>
-
-              {/* ✅ Search + Sort */}
-              <SearchBar />
-
-              {/* ✅ Filter Controls */}
-              <div className="mt-4">
-                <FilterControls />
-              </div>
-
-              {/* ✅ Compact Notes Panel */}
-              <div className="mt-6">
-                <NotesPanel compact />
-              </div>
-
-              {/* ✅ Booking Cards Grid */}
-              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 overflow-hidden">
-                {[1].map((item) => (
-                  <BookingCards key={item} />
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* --- HOTEL OWNER --- */}
-          {activePage === "hotel-owner" && (
-            <div>
-              <h1 className="text-3xl font-bold text-primary mb-6">
-                Hotel Owner Management
-              </h1>
-              <p className="text-gray-600 mb-4">
-                Manage hotel owners, view details, and approve listings here.
-              </p>
-
-              <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-200">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-xl font-semibold text-gray-800">
-                    Owner List
-                  </h2>
-                  <button className="bg-[#1ABC9C] text-white px-5 py-2 rounded-lg font-medium shadow-md">
-                    + Add Owner
-                  </button>
-                </div>
-
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="bg-gray-100 text-gray-700">
-                      <th className="text-left py-3 px-4">Owner Name</th>
-                      <th className="text-left py-3 px-4">Hotel Name</th>
-                      <th className="text-left py-3 px-4">Status</th>
-                      <th className="text-left py-3 px-4">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b hover:bg-gray-50">
-                      <td className="py-3 px-4">Salman Faris</td>
-                      <td className="py-3 px-4">Deccan Stay</td>
-                      <td className="py-3 px-4 text-green-600 font-medium">
-                        Approved
-                      </td>
-                      <td className="py-3 px-4">
-                        <button className="text-blue-600 font-semibold hover:underline">
-                          View
-                        </button>
-                      </td>
-                    </tr>
-                    <tr className="border-b hover:bg-gray-50">
-                      <td className="py-3 px-4">John Wick</td>
-                      <td className="py-3 px-4">Elite Rooms</td>
-                      <td className="py-3 px-4 text-yellow-600 font-medium">
-                        Pending
-                      </td>
-                      <td className="py-3 px-4">
-                        <button className="text-blue-600 font-semibold hover:underline">
-                          Approve
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* --- REFUNDS --- */}
-          {activePage === "refunds" && (
-            <div>
-              <h1 className="text-3xl font-bold text-primary mb-6">Refunds</h1>
-              <p className="text-gray-600">
-                Refund tracking and processing section.
-              </p>
-            </div>
-          )}
-
-          {/* --- MESSAGES --- */}
-          {activePage === "messages" && (
-            <div>
-              <h1 className="text-3xl font-bold text-primary mb-6">Messages</h1>
-              <p className="text-gray-600">
-                All user and admin messages shown here.
-              </p>
-            </div>
-          )}
-
-          {/* --- HELP --- */}
-          {activePage === "help" && (
-            <div>
-              <h1 className="text-3xl font-bold text-primary mb-6">
-                Help & Support
-              </h1>
-              <p className="text-gray-600">
-                FAQs and support information here.
-              </p>
-            </div>
-          )}
-
-          {/* --- SETTINGS --- */}
-          {activePage === "settings" && (
-            <div>
-              <h1 className="text-3xl font-bold text-primary mb-6">Settings</h1>
-              <p className="text-gray-600">
-                Profile and app configuration options.
-              </p>
-            </div>
+        <main className="p-8 relative">
+          {renderContent()}
+          {selectedBooking && (
+            <BookingModal
+              booking={selectedBooking}
+              onClose={() => setSelectedBooking(null)}
+            />
           )}
         </main>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserDashboard
-
+export default UserDashboard;

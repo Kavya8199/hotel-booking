@@ -1,70 +1,64 @@
-
-
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "./AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { isLoggedIn, user, logoutUser } = useContext(AuthContext);
 
   return (
-    <header className="bg-white border-b border-gray-200">
+    <header className="bg-white border-b border-gray-200 fixed top-0 left-0 w-full z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo */}
+
           <div
             className="flex items-center cursor-pointer"
             onClick={() => navigate("/")}
           >
-           <h1 className="font-poppins font-medium text-4xl text-dark">
-          <span className="text-secondary">Deccan</span>Stay.
-        </h1>
+            <h1 className="font-poppins font-medium text-4xl text-dark">
+              <span style={{ color: "#3256EB" }}>Deccan</span>
+              <span className="text-dark-blue">Stay.</span>
+            </h1>
           </div>
 
-          {/* Navigation Links */}
           <nav className="hidden md:flex space-x-8">
-            <button
-              onClick={() => navigate("/")}
-              className="text-primary font-normal hover:text-secondary transition"
-            >
-              Home
-            </button>
-
-            <button
-              onClick={() => navigate("/hotels")}
-              className="text-secondary font-normal hover:text-primary transition"
-            >
-              Hotels
-            </button>
-
-            <button
-              onClick={() => navigate("/user-dashboard")}
-              className="text-secondary font-normal hover:text-primary transition"
-            >
-              Dashboard
-            </button>
-
-            <button
-              onClick={() => navigate("/about")}
-              className="text-secondary font-normal hover:text-primary transition"
-            >
-              About
-            </button>
-
-            <button
-              onClick={() => navigate("/contact")}
-              className="text-secondary font-normal hover:text-primary transition"
-            >
-              Contact
-            </button>
+            <button onClick={() => navigate("/")}>Home</button>
+            <button onClick={() => navigate("/hotels")}>Hotels</button>
+            <button onClick={() => navigate("/about")}>About</button>
+            <button onClick={() => navigate("/contact")}>Contact</button>
           </nav>
 
-          {/* Login Button */}
-<button
-  onClick={() => navigate("/login")}
-  className="bg-blue-700 text-white px-6 py-2 rounded-lg font-medium shadow-lg transition-colors"
->
-  Login
-</button>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => navigate("/admin-dashboard")}
+              className="bg-blue-700 text-white px-6 py-2 rounded-lg"
+            >
+              Admin Dashboard
+            </button>
+
+            {isLoggedIn ? (
+              <>
+                <span className="text-gray-700 font-medium">
+                  Welcome, {user?.name}
+                </span>
+
+                <button
+                  onClick={logoutUser}
+                  className="bg-red-600 text-white px-6 py-2 rounded-lg"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => navigate("/login")}
+                className="bg-blue-700 text-white px-6 py-2 rounded-lg"
+              >
+                Login
+              </button>
+            )}
+          </div>
+
         </div>
       </div>
     </header>
@@ -72,4 +66,3 @@ const Header = () => {
 };
 
 export default Header;
-

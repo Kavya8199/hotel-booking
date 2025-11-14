@@ -1,7 +1,3 @@
-
-
-
-
 import React from "react";
 
 const BookingStepper = () => {
@@ -49,5 +45,4 @@ const BookingStepper = () => {
 };
 
 export default BookingStepper;
-
 

@@ -1,4 +1,3 @@
-
 import React from 'react'
 
 const Hero = () => {
@@ -57,4 +56,3 @@ const Hero = () => {
 }
 
 export default Hero
-

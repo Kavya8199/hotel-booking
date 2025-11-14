@@ -1,4 +1,3 @@
-
 import React from "react";
 
 const About = () => {
@@ -49,10 +48,11 @@ const About = () => {
         {/* Team Details (No Images) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
           <div className="bg-gray-50 p-6 rounded-2xl shadow-md">
-            <h3 className="text-lg font-semibold text-secondary">Kavya Sree</h3>
+            <h3 className="text-lg font-semibold text-secondary">Kavya Sri</h3>
             <p className="text-gray-600 text-sm">Managing Partner</p>
             <p className="text-gray-700 mt-2 text-sm">
-              Leads strategic planning and manages corporate partnerships, facilitating seamless coordination across all Deccan Stay operations.
+              Oversees strategic planning and corporate partnerships, ensuring
+              smooth coordination across all Deccan Stay operations.
             </p>
           </div>
 
@@ -112,4 +112,3 @@ const About = () => {
 };
 
 export default About;
-

@@ -1,5 +1,3 @@
-
-
 import React from "react";
 
 const PaymentStepper = () => {
@@ -56,4 +54,3 @@ const PaymentStepper = () => {
 };
 
 export default PaymentStepper;
-

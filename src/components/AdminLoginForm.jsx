@@ -1,62 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import { AuthContext } from "./AuthContext";
 
-const AdminLoginForm = ({ onAdminLogin }) => {
+const AdminLoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
+  const { loginAdmin } = useContext(AuthContext);
 
-  // ✅ Load Google Identity script
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-    return () => document.body.removeChild(script);
-  }, []);
-
+  // ========= NORMAL LOGIN ==========
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (username === "admin" && password === "admin123") {
-      localStorage.setItem("isAdminAuthenticated", "true");
-      onAdminLogin?.();
+      loginAdmin("Admin", "admin@deccanstay.com"); // ✔ store name + email
       navigate("/admin-dashboard");
     } else {
       alert("Invalid credentials! Use admin / admin123");
     }
   };
 
-  // ✅ Handle Google Sign-In
-  const handleGoogleSignIn = () => {
-    try {
-      /* global google */
-      google.accounts.id.initialize({
-        client_id:
-          "201717811866-thc78omd0isq6jmsaqftpj5fcrinlaas.apps.googleusercontent.com",
-        callback: handleCredentialResponse,
-      });
-
-      google.accounts.id.prompt(); // Opens popup
-    } catch (err) {
-      console.error("Google Auth Error:", err);
-      alert("Google Sign-In failed. Please try again.");
-    }
-  };
-
-  const handleCredentialResponse = (response) => {
-    console.log("Google Credential Response:", response);
-    localStorage.setItem("isAdminAuthenticated", "true");
-    onAdminLogin?.();
-    navigate("/admin-dashboard");
-  };
-
   return (
     <div className="flex-1 flex flex-col justify-center px-8 sm:px-16">
       <div className="max-w-sm mx-auto w-full bg-white p-8 rounded-2xl shadow-md border border-gray-100">
-        {/* 🧑 Header */}
+        
         <h2 className="text-3xl font-semibold text-center text-black mb-2">
           Admin Login
         </h2>
@@ -65,11 +36,10 @@ const AdminLoginForm = ({ onAdminLogin }) => {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* 🧑 Username */}
+
+          {/* Username */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Username
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
             <input
               type="text"
               placeholder="Enter admin username"
@@ -79,11 +49,9 @@ const AdminLoginForm = ({ onAdminLogin }) => {
             />
           </div>
 
-          {/* 🔒 Password with image toggle */}
+          {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -106,37 +74,37 @@ const AdminLoginForm = ({ onAdminLogin }) => {
             </div>
           </div>
 
-          {/* 🪪 Info */}
-          <p className="text-xs text-gray-500 text-center mt-2">
-            Secure access for{" "}
-            <span className="text-blue-600 font-semibold">Deccan Stay</span> admins only.
-          </p>
-
-          {/* ✅ Login Button */}
           <button
             type="submit"
             className="w-full h-10 bg-blue-700 text-white text-base font-medium rounded-lg hover:bg-blue-800 transition"
           >
             Login
           </button>
-               <p class="text-center">
-  Or Continue With Google
-</p>
-          {/* 🔹 Google Sign-In Button */}
-          <button
-            type="button"
-            onClick={handleGoogleSignIn}
-            className="w-full h-9 mt-3 flex items-center justify-center border border-gray-300 rounded-md hover:bg-gray-100 transition"
-          >
-            <img
-              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-              alt="Google"
-              className="w-4 h-4 mr-2"
+
+          <p className="text-center">Or Continue With Google</p>
+
+          {/* GOOGLE LOGIN */}
+          <div className="flex justify-center mt-2">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                const decoded = jwtDecode(credentialResponse.credential);
+                console.log("Google User:", decoded);
+
+                const allowedAdmins = ["youradmin@gmail.com"]; // change this
+
+                if (!allowedAdmins.includes(decoded.email)) {
+                  alert("You are not authorized as an admin!");
+                  return;
+                }
+
+                // ✔ FIXED → store name + email using AuthContext
+                loginAdmin(decoded.name, decoded.email);
+
+                navigate("/admin-dashboard");
+              }}
+              onError={() => alert("Google Login Failed")}
             />
-            <span className="text-sm font-medium text-gray-700">
-              Sign in with Google
-            </span>
-          </button>
+          </div>
         </form>
       </div>
     </div>

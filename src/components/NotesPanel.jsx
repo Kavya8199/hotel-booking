@@ -1,7 +1,3 @@
-
-
-
-
 import React from "react"
 
 const NotesPanel = ({ compact = false }) => {
@@ -20,4 +16,3 @@ const NotesPanel = ({ compact = false }) => {
 }
 
 export default NotesPanel
-

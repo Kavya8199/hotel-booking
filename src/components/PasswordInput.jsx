@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 
 const PasswordInput = ({ label, placeholder, value, onChange }) => {
@@ -38,4 +37,3 @@ const PasswordInput = ({ label, placeholder, value, onChange }) => {
 }
 
 export default PasswordInput
-

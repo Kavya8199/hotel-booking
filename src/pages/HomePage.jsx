@@ -1,24 +1,16 @@
-
-import React from 'react'
-import Hero from '../components/Hero'
-import BookingForm from '../components/BookingForm'
-import MostPicked from '../components/MostPicked'
-import HouseWithBackyard from '../components/HouseWithBackyard'
-import HotelsLivingRoom from '../components/HotelsLivingRoom'
-import HomeBookingForm from "../components/HomeBookingForm";
+import React from "react";
+import Hero from "../components/Hero";
+import BookingForm from "../components/BookingForm";
+import DemoHotels from "../components/DemoHotels"; // ✅ import
 
 function HomePage() {
   return (
-    <section className="landing-page">
+    <section className="landing-page ">
       <Hero />
       <BookingForm />
-      <HomeBookingForm />
-      <MostPicked />
-      <HouseWithBackyard />
-      <HotelsLivingRoom />
+      <DemoHotels /> {/* ✅ Show 15 demo hotels */}
     </section>
-  )
+  );
 }
 
-export default HomePage
-
+export default HomePage;

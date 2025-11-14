@@ -1,4 +1,3 @@
-
 import React from 'react'
 
 const FilterControl = () => {
@@ -59,4 +58,3 @@ const FilterControl = () => {
 }
 
 export default FilterControl
-

@@ -1,4 +1,3 @@
-
 import React from 'react'
 
 const FormInput = ({ label, placeholder, type = 'text', value, onChange }) => {
@@ -19,4 +18,3 @@ const FormInput = ({ label, placeholder, type = 'text', value, onChange }) => {
 }
 
 export default FormInput
-

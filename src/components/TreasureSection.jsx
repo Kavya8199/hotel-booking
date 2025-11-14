@@ -1,4 +1,3 @@
-
 import React from 'react'
 
 const TreasureSection = () => {
@@ -59,4 +58,3 @@ const TreasureSection = () => {
 }
 
 export default TreasureSection
-

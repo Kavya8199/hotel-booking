@@ -1,9 +1,3 @@
-
-
-
-
-
-// 📄 src/components/Bookings.jsx
 import React from "react"
 import SearchBar from "./SearchBar"
 import FilterControls from "./FilterControls"
@@ -34,4 +28,3 @@ const Bookings = () => {
 }
 
 export default Bookings
-

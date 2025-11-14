@@ -1,4 +1,3 @@
-
 import React from 'react'
 
 const PropertyCard = ({ hotel }) => {
@@ -43,4 +42,3 @@ const PropertyCard = ({ hotel }) => {
 }
 
 export default PropertyCard
-

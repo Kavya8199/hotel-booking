@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +9,28 @@ const ConfirmationContent = () => {
   };
 
   const handleGoToDashboard = () => {
-    navigate("/dashboard"); // 📊 Navigate to Dashboard
+    // 🧩 Get current booking details (saved earlier during booking)
+    const currentBooking = JSON.parse(localStorage.getItem("currentBooking"));
+
+    if (currentBooking) {
+      // ✅ Update status to confirmed
+      currentBooking.status = "Confirmed";
+
+      // 🧾 Get existing bookings from localStorage
+      const existingBookings = JSON.parse(localStorage.getItem("userBookings")) || [];
+
+      // ➕ Add the new booking
+      existingBookings.push(currentBooking);
+
+      // 💾 Save updated booking list
+      localStorage.setItem("userBookings", JSON.stringify(existingBookings));
+
+      // 🧹 Clear temporary booking data
+      localStorage.removeItem("currentBooking");
+    }
+
+    // 🔄 Go to user dashboard
+    navigate("/user-dashboard");
   };
 
   return (
@@ -27,7 +46,7 @@ const ConfirmationContent = () => {
 
       {/* Main Heading */}
       <h1 className="text-dark-blue text-4xl font-semibold leading-[54px] text-center mb-20">
-         Payment Completed Sucessfully
+        Payment Completed Successfully
       </h1>
 
       {/* Confirmation Image */}
@@ -41,24 +60,25 @@ const ConfirmationContent = () => {
 
       {/* Information Message */}
       <p className="text-primary-blue text-lg font-light leading-[27px] text-center mb-12 max-w-md">
-        Please check your email & phone Message.
+        Please check your email & phone messages.
         <br />
-        We have sent all the Information
+        We have sent all the booking information.
       </p>
 
       {/* Action Buttons */}
       <div className="flex flex-col items-center space-y-2">
         <button
           onClick={handleBackToHome}
-           className="bg-blue-700 text-white px-6 py-2 rounded-lg font-medium shadow-lg transition-colors"
+          className="bg-blue-700 text-white px-6 py-2 rounded-lg font-medium shadow-lg transition-colors hover:bg-blue-800"
         >
           Back to Home
         </button>
+
         <button
           onClick={handleGoToDashboard}
-          className="text-text-gray text-base leading-[27px] hover:text-gray-600 transition-colors"
+          className="bg-blue-700 text-white px-6 py-2 rounded-lg font-medium shadow-lg transition-colors hover:bg-blue-800"
         >
-          Go to Dashboard
+          Go to User Dashboard
         </button>
       </div>
     </main>
@@ -66,4 +86,3 @@ const ConfirmationContent = () => {
 };
 
 export default ConfirmationContent;
-

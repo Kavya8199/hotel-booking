@@ -1,7 +1,3 @@
-
-
-
-
 import React from "react";
 import { useNavigate } from "react-router-dom"; // ✅ Import navigation hook
 
@@ -10,7 +6,7 @@ const VerificationSuccess = () => {
 
   const handleViewDashboard = () => {
     // Navigate to dashboard page
-    navigate("/dashboard");
+     navigate("/owner-dashboard");
   };
 
   return (
@@ -28,9 +24,9 @@ const VerificationSuccess = () => {
         {/* Verification Card */}
         <div className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-[30px] p-12 max-w-md w-full text-center shadow-lg">
           {/* Logo */}
-          <h1 className="text-[52px] leading-[78px] font-medium mb-8">
-            <span className="text-dark-blue">Deccan</span>
-            <span className="text-primary-blue">Stay.</span>
+          <h1 className="font-poppins font-medium text-4xl text-dark">
+            <span className="text-secondary">Deccan</span>
+            <span className="text-primary-blue">Stay</span>
           </h1>
 
           {/* Success Icon */}
@@ -44,13 +40,13 @@ const VerificationSuccess = () => {
 
           {/* Success Message */}
           <p className="text-primary-blue text-xl font-medium mb-12 leading-relaxed">
-            Once we verified, You can Access Dashboard
+             we verified, Now You can Access Dashboard
           </p>
 
           {/* View Dashboard Button */}
           <button
             onClick={handleViewDashboard}
-            className="bg-primary-blue text-white font-medium py-4 px-8 rounded-[10px] hover:bg-blue-700 transition-colors duration-200 text-lg min-w-[200px]"
+            className="w-full h-10 bg-blue-700 text-white text-[20px] font-medium leading-[20px] rounded-[10px]"
           >
             View Dashboard
           </button>
@@ -80,4 +76,3 @@ const VerificationSuccess = () => {
 };
 
 export default VerificationSuccess;
-

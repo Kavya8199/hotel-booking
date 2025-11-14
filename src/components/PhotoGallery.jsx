@@ -1,5 +1,3 @@
-
-
 import React from "react";
 
 const PhotoGallery = ({ images = [] }) => {
@@ -19,7 +17,6 @@ const PhotoGallery = ({ images = [] }) => {
 };
 
 export default PhotoGallery;
-
 
 
 

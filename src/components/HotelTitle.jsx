@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import React from "react";
 
 const HotelTitle = ({ hotel }) => {
@@ -16,4 +10,3 @@ const HotelTitle = ({ hotel }) => {
 };
 
 export default HotelTitle;
-

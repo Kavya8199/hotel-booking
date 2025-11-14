@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const UsersList = ({ users = [], setUsers = () => {} }) => {
+const UsersList = ({ users, setUsers }) => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [deletingIndex, setDeletingIndex] = useState(null);
   const [editData, setEditData] = useState({ hotel: "", owner: "", role: "" });
@@ -28,14 +28,6 @@ const UsersList = ({ users = [], setUsers = () => {} }) => {
 
   const cancelDelete = () => setDeletingIndex(null);
 
-  if (!Array.isArray(users) || users.length === 0) {
-    return (
-      <div className="p-6 text-center text-gray-500 bg-white rounded-xl border border-gray-200">
-        No users available
-      </div>
-    );
-  }
-
   return (
     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
       <div className="bg-gray-100 px-6 py-4 grid grid-cols-12 gap-4 text-sm font-semibold text-gray-500">
@@ -54,6 +46,7 @@ const UsersList = ({ users = [], setUsers = () => {} }) => {
           >
             {editingIndex === index ? (
               <>
+                {/* 📝 Editable Row */}
                 <div className="col-span-4">
                   <input
                     type="text"
@@ -104,6 +97,7 @@ const UsersList = ({ users = [], setUsers = () => {} }) => {
               </>
             ) : deletingIndex === index ? (
               <>
+                {/* ❌ Delete Confirmation Row */}
                 <div className="col-span-11 text-sm text-red-600">
                   Are you sure you want to delete{" "}
                   <span className="font-semibold">{user.hotel}</span>?
@@ -125,6 +119,7 @@ const UsersList = ({ users = [], setUsers = () => {} }) => {
               </>
             ) : (
               <>
+                {/* 📋 Normal Display Row */}
                 <div className="col-span-4 font-medium text-gray-800">
                   {user.hotel}
                 </div>

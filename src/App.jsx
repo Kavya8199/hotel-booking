@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -46,6 +46,9 @@ import UserBookings from "./pages/UserBookings";
 import UserDashboard from "./pages/UserDashboard";
 import OwnerDashboard from "./pages/OwnerDashboard";
 
+// ✅ AuthContext
+import { AuthProvider, AuthContext } from "./components/AuthContext";
+
 // 🧱 Layouts
 const DashboardLayout = ({ children, onLogout }) => (
   <div className="flex min-h-screen bg-gray-100">
@@ -60,258 +63,229 @@ const DashboardLayout = ({ children, onLogout }) => (
 const PublicLayout = ({ children }) => (
   <div className="min-h-screen bg-white font-poppins flex flex-col">
     <Header />
+    <div className="pt-20"></div>
     <main className="flex-grow">{children}</main>
     <Footer />
   </div>
 );
 
+// ✅ Protected Admin Route
+const AdminRoute = ({ children }) => {
+  const { isAdminAuthenticated } = React.useContext(AuthContext);
+  return isAdminAuthenticated ? children : <Navigate to="/admin-login" replace />;
+};
+
 function App() {
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isAdminAuthenticated") === "true";
-    setIsAdminAuthenticated(loggedIn);
-  }, []);
-
-  const handleAdminLogin = () => {
-    setIsAdminAuthenticated(true);
-    localStorage.setItem("isAdminAuthenticated", "true");
-  };
-
-  const handleAdminLogout = () => {
-    setIsAdminAuthenticated(false);
-    localStorage.removeItem("isAdminAuthenticated");
-  };
-
   return (
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-      <Router>
-        <Routes>
-          {/* 🌐 Public Pages */}
-          <Route
-            path="/"
-            element={
-              <PublicLayout>
-                <Hero />
-                <DemoHotels />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/book"
-            element={
-              <PublicLayout>
-                <BookingPage />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/hotel/:id"
-            element={
-              <PublicLayout>
-                <HotelDetail />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/hotels"
-            element={
-              <PublicLayout>
-                <HotelsList />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/payment"
-            element={
-              <PublicLayout>
-                <section className="max-w-7xl mx-auto px-4 py-10">
-                  <PaymentStepper />
-                  <div className="mt-8">
-                    <PaymentContent />
-                  </div>
-                </section>
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/booking-confirmation"
-            element={
-              <PublicLayout>
-                <BookingConfirmation />
-              </PublicLayout>
-            }
-          />
+      <AuthProvider>
+        <Router>
+          <Routes>
+            {/* 🌐 Public Pages */}
+            <Route
+              path="/"
+              element={
+                <PublicLayout>
+                  <Hero />
+                  <DemoHotels />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/book"
+              element={
+                <PublicLayout>
+                  <BookingPage />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/hotel/:id"
+              element={
+                <PublicLayout>
+                  <HotelDetail />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/hotels"
+              element={
+                <PublicLayout>
+                  <HotelsList />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/payment"
+              element={
+                <PublicLayout>
+                  <section className="max-w-7xl mx-auto px-4 py-10">
+                    <PaymentStepper />
+                    <div className="mt-8">
+                      <PaymentContent />
+                    </div>
+                  </section>
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/booking-confirmation"
+              element={
+                <PublicLayout>
+                  <BookingConfirmation />
+                </PublicLayout>
+              }
+            />
 
-          {/* 🔐 Auth Pages */}
-          <Route
-            path="/login"
-            element={
-              <PublicLayout>
-                <LoginPage />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <PublicLayout>
-                <RegisterPage />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/register-success"
-            element={
-              <PublicLayout>
-                <RegisterSuccess />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/verification-success"
-            element={
-              <PublicLayout>
-                <VerificationSuccess />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/forgot-password"
-            element={
-              <PublicLayout>
-                <ForgotPassword />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/reset-password/:token"
-            element={
-              <PublicLayout>
-                <ResetPassword />
-              </PublicLayout>
-            }
-          />
+            {/* 🔐 Auth Pages */}
+            <Route
+              path="/login"
+              element={
+                <PublicLayout>
+                  <LoginPage />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <PublicLayout>
+                  <RegisterPage />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/register-success"
+              element={
+                <PublicLayout>
+                  <RegisterSuccess />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/verification-success"
+              element={
+                <PublicLayout>
+                  <VerificationSuccess />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/forgot-password"
+              element={
+                <PublicLayout>
+                  <ForgotPassword />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/reset-password/:token"
+              element={
+                <PublicLayout>
+                  <ResetPassword />
+                </PublicLayout>
+              }
+            />
 
-          {/* 🏨 Hotel Registration */}
-          <Route
-            path="/hotel-registration"
-            element={
-              <PublicLayout>
-                <HotelRegistrationForm />
-              </PublicLayout>
-            }
-          />
+            {/* 🏨 Hotel Registration */}
+            <Route
+              path="/hotel-registration"
+              element={
+                <PublicLayout>
+                  <HotelRegistrationForm />
+                </PublicLayout>
+              }
+            />
 
-          {/* 🧭 Info Pages */}
-          <Route
-            path="/about"
-            element={
-              <PublicLayout>
-                <About />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <PublicLayout>
-                <Contact />
-              </PublicLayout>
-            }
-          />
+            {/* 🧭 Info Pages */}
+            <Route
+              path="/about"
+              element={
+                <PublicLayout>
+                  <About />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <PublicLayout>
+                  <Contact />
+                </PublicLayout>
+              }
+            />
 
-          {/* 🧭 User Dashboards */}
-          <Route path="/user-dashboard" element={<UserDashboard />} />
-          <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+            {/* 🧭 User Dashboards */}
+            <Route path="/user-dashboard" element={<UserDashboard />} />
+            <Route path="/owner-dashboard" element={<OwnerDashboard />} />
 
-          {/* 🔐 Admin Login */}
-          <Route
-            path="/admin-login"
-            element={
-              isAdminAuthenticated ? (
-                <Navigate to="/admin-dashboard" replace />
-              ) : (
-                <AdminLogin onAdminLogin={handleAdminLogin} />
-              )
-            }
-          />
+            {/* 🔐 Admin Login */}
+            <Route path="/admin-login" element={<AdminLogin />} />
 
-          {/* 🧭 Protected Admin Dashboard */}
-          <Route
-            path="/admin-dashboard"
-            element={
-              isAdminAuthenticated ? (
-                <DashboardLayout onLogout={handleAdminLogout}>
-                  <Dashboard />
-                </DashboardLayout>
-              ) : (
-                <Navigate to="/admin-login" replace />
-              )
-            }
-          />
-          <Route
-            path="/admin-dashboard/bookings"
-            element={
-              isAdminAuthenticated ? (
-                <DashboardLayout onLogout={handleAdminLogout}>
-                  <UserBookings />
-                </DashboardLayout>
-              ) : (
-                <Navigate to="/admin-login" replace />
-              )
-            }
-          />
-          <Route
-            path="/admin-dashboard/refund"
-            element={
-              isAdminAuthenticated ? (
-                <DashboardLayout onLogout={handleAdminLogout}>
-                  <Refund />
-                </DashboardLayout>
-              ) : (
-                <Navigate to="/admin-login" replace />
-              )
-            }
-          />
-          <Route
-            path="/admin-dashboard/message"
-            element={
-              isAdminAuthenticated ? (
-                <DashboardLayout onLogout={handleAdminLogout}>
-                  <Message />
-                </DashboardLayout>
-              ) : (
-                <Navigate to="/admin-login" replace />
-              )
-            }
-          />
-          <Route
-            path="/admin-dashboard/help"
-            element={
-              isAdminAuthenticated ? (
-                <DashboardLayout onLogout={handleAdminLogout}>
-                  <Help />
-                </DashboardLayout>
-              ) : (
-                <Navigate to="/admin-login" replace />
-              )
-            }
-          />
-          <Route
-            path="/admin-dashboard/setting"
-            element={
-              isAdminAuthenticated ? (
-                <DashboardLayout onLogout={handleAdminLogout}>
-                  <Setting />
-                </DashboardLayout>
-              ) : (
-                <Navigate to="/admin-login" replace />
-              )
-            }
-          />
-        </Routes>
-      </Router>
+            {/* 🧭 Protected Admin Dashboard */}
+            <Route
+              path="/admin-dashboard"
+              element={
+                <AdminRoute>
+                  <DashboardLayout>
+                    <Dashboard />
+                  </DashboardLayout>
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin-dashboard/bookings"
+              element={
+                <AdminRoute>
+                  <DashboardLayout>
+                    <UserBookings />
+                  </DashboardLayout>
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin-dashboard/refund"
+              element={
+                <AdminRoute>
+                  <DashboardLayout>
+                    <Refund />
+                  </DashboardLayout>
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin-dashboard/message"
+              element={
+                <AdminRoute>
+                  <DashboardLayout>
+                    <Message />
+                  </DashboardLayout>
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin-dashboard/help"
+              element={
+                <AdminRoute>
+                  <DashboardLayout>
+                    <Help />
+                  </DashboardLayout>
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin-dashboard/setting"
+              element={
+                <AdminRoute>
+                  <DashboardLayout>
+                    <Setting />
+                  </DashboardLayout>
+                </AdminRoute>
+              }
+            />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </GoogleOAuthProvider>
   );
 }
